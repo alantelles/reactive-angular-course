@@ -15,6 +15,7 @@ import {
 } from 'rxjs/operators';
 import {merge, fromEvent, Observable, concat} from 'rxjs';
 import {Lesson} from '../model/lesson';
+import { CoursesService } from '../services/courses.service';
 
 
 @Component({
@@ -24,14 +25,28 @@ import {Lesson} from '../model/lesson';
 })
 export class SearchLessonsComponent implements OnInit {
 
-  constructor() {
+  searchResults$: Observable<Lesson[]>;
+  activeLesson: Lesson;
 
+  constructor(private courses: CoursesService) {
 
   }
 
   ngOnInit() {
 
 
+  }
+
+  openLesson(lesson: Lesson) {
+    this.activeLesson = lesson;
+  }
+
+  onSearch(search: string) {
+    this.searchResults$ = this.courses.searchLessons(search);
+  }
+
+  onBackToSearch() {
+    this.activeLesson = null;
   }
 
 }
