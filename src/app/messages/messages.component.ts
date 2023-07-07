@@ -15,7 +15,6 @@ export class MessagesComponent implements OnInit {
   showMessages = false;
 
   constructor(public messagesService: MessagesService) {
-    console.log('creating component')
   }
 
   ngOnInit() {
