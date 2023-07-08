@@ -21,6 +21,24 @@ export class CoursesService {
         )
     }
 
+    loadCourseById(courseId: number) {
+        return this.http.get<Course>(`/api/courses/${courseId}`).pipe(
+            shareReplay()
+        )
+    }
+
+    loadCourseLessons(courseId: number): Observable<Lesson[]> {
+        return this.http.get<Lesson[]>('/api/lessons', {
+            params: {
+                pageSize: '-1',
+                courseId: `${courseId}`
+            }
+        }).pipe(
+            map(res => res['payload']),
+            shareReplay()
+        );
+    }
+
     saveCourse(courseId:string, changes: Partial<Course>): Observable<any> {
         return this.http.put(`/api/courses/${courseId}`, changes).pipe(
             shareReplay()
